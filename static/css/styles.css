@@ -1,0 +1,19 @@
+body { padding-bottom: 60px; }
+
+.card-title { font-weight: bold; }
+
+footer { position: fixed; bottom: 0; width: 100%; background: #f8f9fa; padding: 10px 0; }
+
+.btn-outline-success {
+  border-color: #198754;
+  color: #198754;
+  transition: all 0.2s ease-in-out;
+}
+.btn-outline-success:hover {
+  background-color: #198754;
+  color: white;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}

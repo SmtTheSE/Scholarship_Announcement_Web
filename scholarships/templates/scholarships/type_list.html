@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+  <h2 class="mb-4 fw-semibold text-primary">{% trans "Explore Scholarship Categories" %}</h2>
+  <div class="row g-4">
+    {% for type in types %}
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 hover-shadow transition">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ type.name }}</h5>
+            <p class="card-text text-muted">{{ type.description|truncatechars:120 }}</p>
+          </div>
+          <div class="card-footer bg-transparent text-end">
+            <a href="{% url 'scholarships:list_by_type' type.pk %}" class="btn btn-sm btn-outline-primary">{% trans "View Scholarships" %}</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

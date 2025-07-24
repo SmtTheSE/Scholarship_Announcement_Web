@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-23 16:43+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: scholarships/templates/scholarships/detail.html:7
+msgid "Deadline"
+msgstr "ကုန်ဆုံးမည့်ရက်"
+
+#: scholarships/templates/scholarships/detail.html:11
+msgid "Opportunities"
+msgstr "အခွင့်အလမ်း"
+
+#: scholarships/templates/scholarships/detail.html:18
+msgid "Back to"
+msgstr "နောက်သို့"
+
+#: scholarships/templates/scholarships/program_list.html:4
+msgid "Scholarship Programs"
+msgstr "ပညာသင်ဆု အစီအစဥ်များ"
+
+#: scholarships/templates/scholarships/program_list.html:7
+msgid "Search scholarships..."
+msgstr "ပညာသင်ဆုများ ရှာဖွေရန် ... "
+
+#: scholarships/templates/scholarships/type_list.html:4
+msgid "Explore Scholarship Categories"
+msgstr "ပညာသင်ဆုအမျိုးအစားများ ကြည့်ရှုရန်"
+
+#: scholarships/templates/scholarships/type_list.html:14 templates/home.html:9
+msgid "View Scholarships"
+msgstr "ပညာသင်ဆုများ"
+
+#: templates/base.html:7 templates/base.html:26
+msgid "UCSY Scholarships"
+msgstr "UCSY ပညာသင်ဆုများ"
+
+#: templates/base.html:9
+msgid ""
+"Explore scholarship opportunities at the University of Computer Studies, "
+"Yangon."
+msgstr "ရန်ကုန်ကွန်ပျူတာတကွကသိုလ်မှ ပညာသင်ဆုများကြည့်ရန်"
+
+#: templates/base.html:42
+msgid "University of Computer Studies, Yangon"
+msgstr "ရန်ကုန်ကွန်ပျူတာတက္ကသိုလ်"
+
+#: templates/home.html:6
+msgid "UCSY Logo"
+msgstr "UCSY တံဆိပ်"
+
+#: templates/home.html:7
+msgid "Welcome to UCSY Scholarships"
+msgstr "UCSY ပညာသင်ဆုများမှ ကြိုဆိုပါသည်။"
+
+#: templates/home.html:8
+msgid "Explore opportunities for your academic future—locally and abroad."
+msgstr "ပြည်တွင်း၊ ပြည်ပ ပညာသင်အခွင့်အလမ်းများကြည့်ရန်"
