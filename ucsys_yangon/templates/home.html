@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+  <div class="text-center py-5">
+    <img src="{% static 'img/ucsy_logo.png' %}" alt="{% trans 'UCSY Logo' %}" width="120" class="mb-4">
+    <h1 class="display-5 fw-bold text-primary">{% trans "Welcome to UCSY Scholarships" %}</h1>
+    <p class="lead text-muted mt-3">{% trans "Explore opportunities for your academic future—locally and abroad." %}</p>
+    <a href="{% url 'scholarships:type_list' %}" class="btn btn-primary btn-lg mt-4 shadow-sm">{% trans "View Scholarships" %}</a>
+  </div>
+{% endblock %}

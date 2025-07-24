@@ -1,0 +1,5 @@
+body { padding-bottom: 60px; }
+
+.card-title { font-weight: bold; }
+
+footer { position: fixed; bottom: 0; width: 100%; background: #f8f9fa; padding: 10px 0; }

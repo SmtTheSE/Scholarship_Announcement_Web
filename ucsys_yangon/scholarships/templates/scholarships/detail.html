@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white border-bottom">
+      <h3 class="fw-bold">{{ object.title }}</h3>
+      <small class="text-muted">{{ object.provider }} &middot; {% trans "Deadline" %}: <strong>{{ object.deadline }}</strong></small>
+    </div>
+    <div class="card-body">
+      <p>{{ object.description }}</p>
+      <h5 class="mt-4"> {% trans "Opportunities" %}</h5>
+      <ul class="list-group list-group-flush">
+        {% for opp in object.get_opportunities_list %}
+          <li class="list-group-item">{{ opp }}</li>
+        {% endfor %}
+      </ul>
+      <div class="mt-4">
+        <a href="{% url 'scholarships:list_by_type' object.type.pk %}" class="btn btn-outline-secondary">← {% trans "Back to" %} {{ object.type.name }}</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
