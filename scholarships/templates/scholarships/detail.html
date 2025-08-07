@@ -1,40 +1,112 @@
 {% extends 'base.html' %}
 {% load static i18n %}
+
 {% block content %}
-  <div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white border-bottom">
-      <h3 class="fw-bold">{{ object.title }}</h3>
-      <small class="text-muted">{{ object.provider }} &middot; {% trans "Deadline" %}: <strong>{{ object.deadline }}</strong></small>
-    </div>
-    <div class="card-body">
-      <p>{{ object.description }}</p>
-      <h5 class="mt-4"> {% trans "Opportunities" %}</h5>
-      <ul class="list-group list-group-flush">
-        {% for opp in object.get_opportunities_list %}
-          <li class="list-group-item">{{ opp }}</li>
-        {% endfor %}
-      </ul>
-      <div class="mt-4">
-        <a href="{% url 'scholarships:list_by_type' object.type.pk %}" class="btn btn-outline-secondary">← {% trans "Back to" %} {{ object.type.name }}</a>
+<div class="card border-0 shadow-sm mb-4">
+  <div class="card-header bg-white border-bottom">
+    <h3 class="fw-bold">{{ scholarship.title }}</h3>
+    <small class="text-muted">
+      {{ scholarship.provider }} &middot;
+      {% trans "Deadline" %}: <strong>{{ scholarship.deadline }}</strong>
+    </small>
+  </div>
+
+  <div class="card-body">
+    <p>{{ scholarship.description }}</p>
+
+    <h5 class="mt-4">{% trans "Opportunities" %}</h5>
+    <ul class="list-group list-group-flush">
+      {% for opp in scholarship.get_opportunities_list %}
+        <li class="list-group-item">{{ opp }}</li>
+      {% endfor %}
+    </ul>
+
+    {% if scholarship.attachment %}
+      <div class="mt-5 p-4 border rounded bg-light shadow-sm">
+        <h5 class="fw-semibold text-primary">📎 {% trans "Official Document" %}</h5>
+        <p class="text-muted small mb-3">
+          {% trans "This scholarship includes an attached PDF for official guidelines or authorization." %}
+        </p>
+        <div class="d-flex align-items-center gap-3">
+          <img src="{% static 'img/pdf_icon.svg' %}" alt="PDF Icon" width="32">
+          <a href="{{ scholarship.attachment.url }}" target="_blank" class="btn btn-outline-success btn-sm">
+            📄 {% trans "Download PDF File" %}
+          </a>
+        </div>
       </div>
-    </div>
+    {% endif %}
 
-   {% if object.attachment %}
-  <div class="mt-5 p-4 border rounded bg-light shadow-sm">
-    <h5 class="fw-semibold text-primary">📎 {% trans "Official Document" %}</h5>
-    <p class="text-muted small mb-3">
-      {% trans "This scholarship includes an attached PDF for official guidelines or authorization." %}
-    </p>
+    {% if user.is_authenticated %}
+      <div class="mt-5">
+        <h4 class="mb-3 d-flex align-items-center justify-content-between">
+          {% trans "Your Application" %}
+          {% if application %}
+            {% if application.status == "submitted" %}
+              <span class="badge bg-success">{% trans "Submitted" %}</span>
+            {% elif application.status == "draft" %}
+              <span class="badge bg-secondary">{% trans "Draft" %}</span>
+            {% elif application.status == "rejected" %}
+              <span class="badge bg-danger">{% trans "Rejected" %}</span>
+            {% endif %}
+          {% endif %}
+        </h4>
 
-    <div class="d-flex align-items-center gap-3">
-      <img src="{% static 'img/pdf_icon.svg' %}" alt="PDF Icon" width="32">
-      <a href="{{ object.attachment.url }}" target="_blank" class="btn btn-outline-success btn-sm px-3 py-2 fw-medium shadow-sm">
-        📄 {% trans "Download PDF File" %}
-      </a>
-    </div>
+        {% if application %}
+          {% if application.status == "submitted" %}
+            <div class="alert alert-info">
+              {% trans "You have submitted this application. You cannot edit it further." %}
+            </div>
+          {% elif application.status == "rejected" %}
+            <div class="alert alert-danger">
+              <strong>{% trans "Your application has been rejected." %}</strong><br>
+              <span><strong>{% trans "Reason:" %}</strong> {{ application.rejection_reason }}</span>
+            </div>
+          {% endif %}
+        {% endif %}
+
+        {% if application and application.status == "submitted" %}
+          <div class="mb-3">
+            <strong>{% trans "Statement of Purpose" %}</strong>
+            <div class="border p-3 bg-light">{{ application.statement|safe }}</div>
+          </div>
+          {% if application.cv %}
+            <p><strong>📎 CV:</strong> <a href="{{ application.cv.url }}" target="_blank">Download CV</a></p>
+          {% endif %}
+          {% if application.certificate %}
+            <p><strong>📎 Certificate:</strong> <a href="{{ application.certificate.url }}" target="_blank">Download Certificate</a></p>
+          {% endif %}
+        {% endif %}
+
+        {% if not application %}
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ application_form.as_p }}
+            <div class="form-group mt-3">
+              <button type="submit" name="action" value="save" class="btn btn-secondary me-2">{% trans "Save as Draft" %}</button>
+              <button type="submit" name="action" value="submit" class="btn btn-primary">{% trans "Submit Application" %}</button>
+            </div>
+          </form>
+        {% endif %}
+
+        {% if application %}
+          {% if application.status != "submitted" and application.status != "rejected" %}
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ application_form.as_p }}
+              <div class="form-group mt-3">
+                <button type="submit" name="action" value="save" class="btn btn-secondary me-2">{% trans "Save as Draft" %}</button>
+                <button type="submit" name="action" value="submit" class="btn btn-primary">{% trans "Submit Application" %}</button>
+              </div>
+            </form>
+          {% endif %}
+        {% endif %}
+
+      </div>
+    {% else %}
+      <div class="alert alert-info mt-4">
+        {% trans "You must be logged in to apply for this scholarship." %}
+      </div>
+    {% endif %}
   </div>
-{% endif %}
-
-
-  </div>
+</div>
 {% endblock %}
