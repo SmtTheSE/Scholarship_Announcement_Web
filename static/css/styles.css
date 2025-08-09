@@ -1,19 +1,91 @@
-body { padding-bottom: 60px; }
-
-.card-title { font-weight: bold; }
-
-footer { position: fixed; bottom: 0; width: 100%; background: #f8f9fa; padding: 10px 0; }
-
-.btn-outline-success {
-  border-color: #198754;
-  color: #198754;
-  transition: all 0.2s ease-in-out;
-}
-.btn-outline-success:hover {
-  background-color: #198754;
-  color: white;
+/* styles.css — Modern theme, glassmorphism, and polished micro-interactions */
+:root{
+  --primary-1: #0d6efd;
+  --primary-2: #6610f2;
+  --accent: #06b6d4;
+  --muted: #6c757d;
+  --bg: #f6f8fb;
+  --glass: rgba(255,255,255,0.72);
+  --glass-border: rgba(255,255,255,0.45);
+  --card-shadow: 0 6px 24px rgba(18,38,63,0.08);
 }
 
-.bg-light {
-  background-color: #f8f9fa !important;
+*{box-sizing:border-box}
+body{
+  background: linear-gradient(180deg, #f7f9fc 0%, var(--bg) 100%);
+  color:#0f1724;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding-left:1.5rem; padding-right:1.5rem;
+}
+
+/* ---------- Utilities & motion ---------- */
+.container{max-width:1100px}
+.fade-in{animation:fadeIn .6s cubic-bezier(.2,.9,.3,1) both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.slow-fade{animation:fadeIn .9s ease both}
+
+/* clickable defaults */
+a,button{transition:all .28s cubic-bezier(.2,.9,.3,1)}
+a:hover,button:hover{transform:translateY(-2px)}
+
+/* ---------- Navbar ---------- */
+.navbar{
+  background: linear-gradient(90deg, rgba(255,255,255,0.7), rgba(255,255,255,0.55));
+  border-radius: 14px;
+  padding: .55rem 1rem;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+.navbar-brand img{height:44px;margin-right:.6rem;border-radius:8px}
+.navbar .nav-link{color:rgba(15,23,36,.75);font-weight:500}
+.navbar .nav-link:hover{color:var(--primary-1)}
+.navbar .btn{border-radius:999px}
+
+/* underline microbar */
+.navbar .nav-link{position:relative}
+.navbar .nav-link::after{content:"";position:absolute;left:0;right:auto;bottom:-6px;height:3px;width:0;background:linear-gradient(90deg,var(--primary-1),var(--primary-2));border-radius:6px;transition:width .28s}
+.navbar .nav-link:hover::after{width:55%}
+
+/* ---------- Cards / Hero ---------- */
+.card{border-radius:14px;border:0;background:var(--glass);box-shadow:var(--card-shadow);overflow:hidden}
+.hero-image{width:100%;height:0;padding-bottom:62%;background-size:cover;background-position:center;border-radius:12px}
+.text-gradient{background:linear-gradient(135deg,var(--primary-1),var(--primary-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* CTA buttons */
+.btn-primary{background:linear-gradient(90deg,var(--primary-1),var(--primary-2));border:0;border-radius:999px;padding:.6rem 1.1rem;font-weight:600}
+.btn-outline-primary{border-radius:999px;padding:.45rem .9rem}
+.btn:focus{outline:0;box-shadow:0 6px 20px rgba(13,110,253,0.12)}
+
+/* ---------- Table (admin) ---------- */
+.table-responsive{border-radius:12px}
+.table thead th{background:transparent;border-bottom:1px solid rgba(15,23,36,0.06);font-weight:600}
+.table tbody tr{transition:transform .22s, box-shadow .22s}
+.table tbody tr:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(15,23,36,0.06);background:linear-gradient(90deg, rgba(13,110,253,0.03), transparent)}
+.table td, .table th{vertical-align:middle}
+.badge{border-radius:8px;padding:.45em .6em;font-weight:600}
+
+/* inputs and textareas */
+.form-control{border-radius:10px;padding:.6rem .85rem;box-shadow:none;border:1px solid rgba(15,23,36,0.08)}
+.form-control:focus{box-shadow:0 10px 28px rgba(9,132,255,0.08)}
+
+/* pill textarea on admin actions */
+.form-control.form-control-sm{border-radius:12px;padding:.5rem}
+
+/* file links */
+.file-pill{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .7rem;border-radius:999px;border:1px solid rgba(15,23,36,0.06);background:rgba(255,255,255,0.6)}
+
+/* card lists */
+.list-group-item{border:0;background:transparent;padding:.9rem 1rem;border-radius:10px}
+.list-group-item:hover{background:linear-gradient(90deg, rgba(13,110,253,0.03), rgba(102,16,242,0.02));transform:translateY(-3px)}
+
+/* tiny helpers */
+.small-muted{color:var(--muted);font-size:.92rem}
+.center-muted{text-align:center;color:var(--muted)}
+
+/* responsive tweaks */
+@media (max-width:768px){
+  .navbar{padding:.45rem}
+  .hero-image{padding-bottom:56%}
 }
