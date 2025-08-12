@@ -53,7 +53,7 @@
                   {% csrf_token %}
                   <div class="d-flex flex-column gap-2">
                     <button type="submit" name="decision" value="accept" class="btn btn-success btn-sm">
-                      ✅ {% trans "Approve" %}
+                       {% trans "Approve" %}
                     </button>
                     <textarea name="reason" class="form-control form-control-sm" rows="2" placeholder="{% trans 'Rejection reason' %}..."></textarea>
                     <button type="submit" name="decision" value="reject" class="btn btn-danger btn-sm">

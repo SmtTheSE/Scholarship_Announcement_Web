@@ -5,10 +5,12 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator
+from django.template.loader import render_to_string
 from .models import ScholarshipType, Scholarship, Application
 from .forms import ApplicationForm
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 
 def home(request):
     form_type = request.POST.get('form_type', '')
@@ -142,6 +144,31 @@ class ScholarshipDetailView(View):
             'application': application,
         })
 
+@login_required
+def dashboard(request):
+    # Get all applications for logged-in user
+    applications = Application.objects.filter(user=request.user).select_related('scholarship')
+
+    # Filtering logic
+    status = request.GET.get('status')
+    if status and status != "all":
+        applications = applications.filter(status=status)
+
+    # Define status tabs in one place
+    statuses = [
+        ('all', 'All', 'secondary'),
+        ('accepted', 'Accepted', 'success'),
+        ('rejected', 'Rejected', 'danger'),
+        ('submitted', 'Submitted', 'primary'),
+        ('draft', 'Draft', 'secondary'),
+    ]
+
+    return render(request, 'scholarships/dashboard.html', {
+        'applications': applications,
+        'statuses': statuses,
+        'active_status': status or 'all',
+    })
+
 
 @login_required
 @require_POST
@@ -179,3 +206,8 @@ def review_application(request, app_id):
 
     application.save()
     return redirect('scholarships:home')
+
+@require_POST
+def dismiss_rejection_notice(request):
+    request.session['dismissed_rejection'] = True
+    return JsonResponse({'status': 'ok'})

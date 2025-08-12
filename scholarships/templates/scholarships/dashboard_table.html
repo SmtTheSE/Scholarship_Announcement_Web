@@ -1,0 +1,71 @@
+{# scholarships/dashboard_table.html #}
+{% if page_obj %}
+<div class="table-responsive">
+    <table class="table table-bordered align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>{% trans "Scholarship" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Applied On" %}</th>
+                <th>{% trans "Reason (if rejected)" %}</th>
+                <th>{% trans "Actions" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in page_obj %}
+            <tr>
+                <td>
+                    <a href="{% url 'scholarships:detail' app.scholarship.pk %}">
+                        {{ app.scholarship.title }}
+                    </a>
+                </td>
+                <td>
+                    {% if app.status == "accepted" %}
+                        <span class="badge bg-success">{% trans "Accepted" %}</span>
+                    {% elif app.status == "rejected" %}
+                        <span class="badge bg-danger">{% trans "Rejected" %}</span>
+                    {% elif app.status == "submitted" %}
+                        <span class="badge bg-primary">{% trans "Submitted" %}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{% trans "Draft" %}</span>
+                    {% endif %}
+                </td>
+                <td>{{ app.created_at|date:"M d, Y" }}</td>
+                <td>{% if app.status == "rejected" %}{{ app.rejection_reason }}{% endif %}</td>
+                <td>
+                    <a href="{% url 'scholarships:detail' app.scholarship.pk %}" 
+                       class="btn btn-sm btn-outline-primary">
+                        {% trans "View" %}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination -->
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">«</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">«</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">»</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">»</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% else %}
+<p class="text-muted">{% trans "No applications found." %}</p>
+{% endif %}
